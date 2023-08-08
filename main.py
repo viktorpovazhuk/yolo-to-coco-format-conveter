@@ -1,3 +1,5 @@
+# python main.py --path C:\Users\Viktor.Povazhuk\PycharmProjects\Yolo-to-COCO-format-converter\tutorial\yolo8 --output train_yolo8 --yolo-subdir
+
 from pathlib import Path
 
 from create_annotations import (
@@ -16,19 +18,16 @@ import imagesize
 # Don't change the list name 'Classes'          #
 #################################################
 
-YOLO_DARKNET_SUB_DIR = "YOLO_darknet"
+YOLO_SUB_DIRS = ["labels", "images"]
 
 classes = [
-    "chair",
-    "handle",
-    "table",
-    "button",
-    "person",
+    "head",
+    "helmet"
 ]
 
 
 def get_images_info_and_annotations(opt):
-    path = Path(opt.path)
+    path = Path(opt.path) / YOLO_SUB_DIRS[1]
     annotations = []
     images_annotations = []
     if path.is_dir():
@@ -56,7 +55,7 @@ def get_images_info_and_annotations(opt):
 
         label_file_name = f"{file_path.stem}.txt"
         if opt.yolo_subdir:
-            annotations_path = file_path.parent / YOLO_DARKNET_SUB_DIR / label_file_name
+            annotations_path = file_path.parent.parent / YOLO_SUB_DIRS[0] / label_file_name
         else:
             annotations_path = file_path.parent / label_file_name
 
