@@ -1,4 +1,5 @@
-# python main.py --path C:\Users\Viktor.Povazhuk\PycharmProjects\Yolo-to-COCO-format-converter\tutorial\yolo8 --output train_yolo8 --yolo-subdir
+# python3 main.py --path ~/PythonProjects/helmet_detection/data/demo/opensource/valid/ --output ann.json --yolo-subdir
+# # python main.py --path C:\Users\Viktor.Povazhuk\PycharmProjects\Yolo-to-COCO-format-converter\tutorial\yolo8 --output train_yolo8 --yolo-subdir
 
 from pathlib import Path
 
@@ -20,10 +21,7 @@ import imagesize
 
 YOLO_SUB_DIRS = ["labels", "images"]
 
-classes = [
-    "head",
-    "helmet"
-]
+classes = ["head", "helmet"]
 
 
 def get_images_info_and_annotations(opt):
@@ -44,7 +42,7 @@ def get_images_info_and_annotations(opt):
 
     for file_path in file_paths:
         # Check how many items have progressed
-        print("\rProcessing " + str(image_id) + " ...", end='')
+        print("\rProcessing " + str(image_id) + " ...", end="")
 
         # Build image annotation, known the image's width and height
         w, h = imagesize.get(str(file_path))
@@ -55,7 +53,9 @@ def get_images_info_and_annotations(opt):
 
         label_file_name = f"{file_path.stem}.txt"
         if opt.yolo_subdir:
-            annotations_path = file_path.parent.parent / YOLO_SUB_DIRS[0] / label_file_name
+            annotations_path = (
+                file_path.parent.parent / YOLO_SUB_DIRS[0] / label_file_name
+            )
         else:
             annotations_path = file_path.parent / label_file_name
 
